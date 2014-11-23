@@ -19,10 +19,11 @@ essai <- rbind(cbind(subjecttrain,activitiestrain,trainingset[,extractVariables]
 result <- merge(actlabels,essai)
 # creating another variable to compute the mean by aggregating by subject and activity
 means <- aggregate(result[,3] ~ subjectID + activityID, data = result, FUN = mean)
-# looping over the retained feature to compute the mean
+# looping over the retained features to compute the mean
 for (i in 4:ncol(result)){
   means[,i] <- aggregate( result[,i] ~ subjectID + activityID, data = result, FUN = mean )[,3]
 }
 # setting the column names properly
 colnames(means)[4:82]<-features[extractVariables]
+means=select(means,-3)
 write.table(means,"result.txt",row.name=FALSE)
