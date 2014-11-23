@@ -1,7 +1,7 @@
 # reading feature names and trimming numeric headers
 features <- scan("features.txt",sep = "\n",what=character())
 features <- sub("^.*[0-9] ","",features)
-# construct a vector with variables to retain
+# construct a vector with features to retain
 extractVariables <- grep("std()|mean()",features)
 # getting subject data
 subjecttrain <- read.table("train/subject_train.txt", col.names="subjectID")
@@ -13,7 +13,7 @@ testset <- read.table("test/X_test.txt",col.names=features)
 actlabels <- read.table("activity_labels.txt",col.names=c("activityID","activityName"))
 activitiestest <- read.table("test/y_test.txt",col.names="activityID")
 activitiestrain <- read.table("train/y_train.txt",col.names="activityID")
-# binding the data together while selecting only the proper variables
+# binding the data together while selecting only the proper features
 essai <- rbind(cbind(subjecttrain,activitiestrain,trainingset[,extractVariables]),cbind(subjecttest,activitiestest,testset[,extractVariables]))
 # adding the activity names by merging
 result <- merge(actlabels,essai)
